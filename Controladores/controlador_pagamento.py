@@ -1,17 +1,17 @@
 from fastapi import APIRouter
-from _atm import Atm
+from _pagamento import Pagamento
 
 
 #pip install sqlalchemy
 from sqlalchemy import create_engine, text
-router = APIRouter(prefix="/atms", tags=["atms"])
+router = APIRouter(prefix="/pagamentos", tags=["pagamentos"])
 
 #inserção no banco "postgresql://usuario:senha@servidor:porta/banco"
 DATABASE_URL = "postgresql://postgres:123@localhost:5432/Zap?client_encoding=win1252"
 #REST
 #Create
 @router.post('/cadastro')
-def cadastrar(atm: Atm):
+def cadastrar(pagamento: Pagamento):
 
     engine = create_engine(DATABASE_URL)
 
@@ -19,23 +19,24 @@ def cadastrar(atm: Atm):
         with engine.begin() as con:
 
             sql = """
-                INSERT INTO public.atendimento(
-	                assunto, status, data_abertura, data_fechamento, usuario_id)
-	            VALUES (:atm_assunto, :atm_status, :atm_abertura, :atm_fechamento, :atm_usuario_id);
+                INSERT INTO public.pagamento(
+	                valor, forma_pagamento, status, data_pagamento, observacoes, matricula_id)
+	            VALUES (:pag_valor, :pag_forma, :pag_status, :pag_data, :pag_obs, :pag_matricula_id);
             """
 
             dados = {
-                ":atm_assunto": atm.assunto,
-                ":atm_status": atm.status,
-                ":atm_abertura": atm.data_abertura,
-                ":atm_fechamento": atm.data_fechamento,
-                ":atm_usuario_id": atm.usuario_id
+                "pag_valor": pagamento.valor,
+                "pag_forma": pagamento.forma_pagamento,
+                "pag_status": pagamento.status,
+                "pag_data": pagamento.data_pagamento,
+                "pag_obs": pagamento.observacoes,
+                "pag_matricula_id": pagamento.matricula_id
             }
 
             con.execute(text(sql), dados)
 
             return {
-                "mensagem": "Atendimento cadastrado com sucesso"
+                "mensagem": "Pagamento cadastrado com sucesso"
             }
 
     except Exception as e:
@@ -49,7 +50,7 @@ def cadastrar(atm: Atm):
 
 
 @router.put('/{id}')
-def atualizar(id: int, atm: Atm):
+def atualizar(id: int, pagamento: Pagamento):
 
     engine = create_engine(DATABASE_URL)
 
@@ -57,29 +58,29 @@ def atualizar(id: int, atm: Atm):
         with engine.begin() as con:
 
             sql = """
-                UPDATE public.atendimento
-	            SET assunto=:atm_assunto, status=:atm_status, data_abertura=:atm_abertura, data_fechamento:atm_fechamento, usuario_id=:atm_usuario_id
-	            WHERE id = :atm_id;
+                UPDATE public.pagamento
+	            SET valor=:pag_valor, forma_pagamento=:pag_forma, status=:pag_status, data_pagamento=:pag_data, observacoes=:pag_obs, matricula_id=:pag_matricula_id
+	            WHERE id = :pag_id;
             """
 
             dados = {
-                "atm_id": id,
-                ":atm_assunto": atm.assunto,
-                ":atm_status": atm.status,
-                ":atm_abertura": atm.data_abertura,
-                ":atm_fechamento": atm.data_fechamento,
-                ":atm_usuario_id": atm.usuario_id
+                "pag_id": id,
+                "pag_valor": pagamento.valor,
+                "pag_forma": pagamento.forma_pagamento,
+                "pag_status": pagamento.status,
+                "pag_data": pagamento.data_pagamento,
+                "pag_matricula_id": pagamento.matricula_id
             }
 
             resultado = con.execute(text(sql), dados)
 
             if resultado.rowcount == 0:
                 return {
-                    "Atendimento não encontrado"
+                    "Pagamento não encontrado"
                 }
 
             return {
-                "Atendimento atualizado com sucesso"
+                "Pagamento atualizado com sucesso"
             }
 
     except Exception as e:
@@ -99,23 +100,23 @@ def deletar(id: int):
         with engine.begin() as con:
 
             sql = """
-                DELETE FROM public.atendimento
-	            WHERE id = :atm_id;
+                DELETE FROM public.pagamento
+	            WHERE id = :pag_id;
             """
 
             dados = {
-                "atm_id": id
+                "pag_id": id
             }
 
             resultado = con.execute(text(sql), dados)
 
             if resultado.rowcount == 0:
                 return {
-                    "Atendimento não encontrado"
+                    "Pagamento não encontrado"
                 }
 
             return {
-                "Atendimento excluído com sucesso"
+                "Pagamento excluído com sucesso"
             }
 
     except Exception as e:
