@@ -1,17 +1,17 @@
 from fastapi import APIRouter
-from _atendimento import Atendimento
+from _pagamento import Pagamento
 
 
 #pip install sqlalchemy
 from sqlalchemy import create_engine, text
-router = APIRouter(prefix="/atendimentos", tags=["at"])
+router = APIRouter(prefix="/pagamentos", tags=["pagamentos"])
 
 #inserção no banco "postgresql://usuario:senha@servidor:porta/banco"
 DATABASE_URL = "postgresql://postgres:123@localhost:5432/Zap?client_encoding=win1252"
 #REST
 #Create
 @router.post('/cadastro')
-def cadastrar(adm: Adm):
+def cadastrar(pagamento: Pagamento):
 
     engine = create_engine(DATABASE_URL)
 
@@ -19,24 +19,24 @@ def cadastrar(adm: Adm):
         with engine.begin() as con:
 
             sql = """
-                INSERT INTO public.administrador(
-	                nome, email, senha, nivel_acesso, data_cadastro, status)
-	            VALUES (:adm_nome, :adm_email, :adm_senha, :adm_acesso, :adm_cadastro, :adm_status);
+                INSERT INTO public.pagamento(
+	                valor, forma_pagamento, status, data_pagamento, observacoes, matricula_id)
+	            VALUES (:pag_valor, :pag_forma, :pag_status, :pag_data, :pag_obs, :pag_matricula_id);
             """
 
             dados = {
-                "adm_nome": adm.nome,
-                "adm_email": adm.email,
-                "adm_senha": adm.senha,
-                "adm_acesso": adm.nivel_acesso,
-                "adm_cadastro": adm.data_cadastro,
-                "adm_status": adm.status
+                "pag_valor": pagamento.valor,
+                "pag_forma": pagamento.forma_pagamento,
+                "pag_status": pagamento.status,
+                "pag_data": pagamento.data_pagamento,
+                "pag_obs": pagamento.observacoes,
+                "pag_matricula_id": pagamento.matricula_id
             }
 
             con.execute(text(sql), dados)
 
             return {
-                "mensagem": "Administrador cadastrado com sucesso"
+                "mensagem": "Pagamento cadastrado com sucesso"
             }
 
     except Exception as e:
@@ -50,7 +50,7 @@ def cadastrar(adm: Adm):
 
 
 @router.put('/{id}')
-def atualizar(id: int, adm: Adm):
+def atualizar(id: int, pagamento: Pagamento):
 
     engine = create_engine(DATABASE_URL)
 
@@ -58,30 +58,29 @@ def atualizar(id: int, adm: Adm):
         with engine.begin() as con:
 
             sql = """
-                UPDATE public.administrador
-	            SET nome=:adm_nome, email=:adm_email, senha=:adm_senha, nivel_acesso=:adm_acesso, data_cadastro=:adm_cadastro, status=:adm_status
-	            WHERE id = :adm_id;
+                UPDATE public.pagamento
+	            SET valor=:pag_valor, forma_pagamento=:pag_forma, status=:pag_status, data_pagamento=:pag_data, observacoes=:pag_obs, matricula_id=:pag_matricula_id
+	            WHERE id = :pag_id;
             """
 
             dados = {
-                "adm_id": id,
-                "adm_nome": adm.nome,
-                "adm_email": adm.email,
-                "adm_senha": adm.senha,
-                "adm_acesso": adm.nivel_acesso,
-                "adm_cadastro": adm.data_cadastro,
-                "adm_status": adm.status
+                "pag_id": id,
+                "pag_valor": pagamento.valor,
+                "pag_forma": pagamento.forma_pagamento,
+                "pag_status": pagamento.status,
+                "pag_data": pagamento.data_pagamento,
+                "pag_matricula_id": pagamento.matricula_id
             }
 
             resultado = con.execute(text(sql), dados)
 
             if resultado.rowcount == 0:
                 return {
-                    "Administrador não encontrado"
+                    "Pagamento não encontrado"
                 }
 
             return {
-                "Administrador atualizado com sucesso"
+                "Pagamento atualizado com sucesso"
             }
 
     except Exception as e:
@@ -101,23 +100,23 @@ def deletar(id: int):
         with engine.begin() as con:
 
             sql = """
-                DELETE FROM public.administrador
-	            WHERE id = :adm_id;
+                DELETE FROM public.pagamento
+	            WHERE id = :pag_id;
             """
 
             dados = {
-                "adm_id": id
+                "pag_id": id
             }
 
             resultado = con.execute(text(sql), dados)
 
             if resultado.rowcount == 0:
                 return {
-                    "Administrador não encontrado"
+                    "Pagamento não encontrado"
                 }
 
             return {
-                "Administrador excluído com sucesso"
+                "Pagamento excluído com sucesso"
             }
 
     except Exception as e:

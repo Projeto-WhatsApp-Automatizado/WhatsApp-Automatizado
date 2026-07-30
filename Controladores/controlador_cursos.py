@@ -4,7 +4,7 @@ from _curso import Curso
 
 #pip install sqlalchemy
 from sqlalchemy import create_engine, text
-router = APIRouter(prefix="/curso", tags=["curso"])
+router = APIRouter(prefix="/cursos", tags=["cursos"])
 
 #inserção no banco "postgresql://usuario:senha@servidor:porta/banco"
 # Altere esta linha no controlador_usuario.py:
@@ -21,12 +21,11 @@ def cadastrar(curso: Curso):
 
             sql = """
                 INSERT INTO public.curso(
-	            edital_id, nome, descricao, carga_horaria, valor, inicio_aulas, status)
-	            VALUES (:edital_id, :nome, :descricao, :carga_horaria, :valor, :inicio_aulas, :status);
+	            nome, descricao, carga_horaria, valor, inicio_aulas, status)
+	            VALUES (:nome, :descricao, :carga_horaria, :valor, :inicio_aulas, :status);
             """
 
             dados = {
-                "edital_id": curso.edital_id,
                 "nome": curso.nome,
                 "descricao": curso.descricao,
                 "carga_horaria": curso.carga_horaria,
@@ -61,13 +60,12 @@ def atualizar(id: int, curso: Curso):
 
             sql = """
                 UPDATE public.curso
-	            SET id=:id, edital_id=:edital_id, nome=:nome, descricao=:descricao, carga_horaria=:carga_horaria, valor=:valor, inicio_aulas=:inicio_aulas, status=:status
+	            SET id=:id, nome=:nome, descricao=:descricao, carga_horaria=:carga_horaria, valor=:valor, inicio_aulas=:inicio_aulas, status=:status
 	            WHERE id = :id;
             """
 
             dados = {
                 "id": id,
-                "edital_id": curso.edital_id,
                 "nome": curso.nome,
                 "descricao": curso.descricao,
                 "carga_horaria": curso.carga_horaria,
