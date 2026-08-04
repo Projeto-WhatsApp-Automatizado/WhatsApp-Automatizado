@@ -4,7 +4,7 @@ from pydantic import BaseModel, Field
 class Curso(BaseModel):
     nome: str = Field(min_length=1)
     descricao: str = Field(min_length=1)
-    carga_horaria: str = Field(min_length=1)
+    carga_horaria: int
     valor: float = Field(gt=0)
     inicio_aulas: date
     status: bool

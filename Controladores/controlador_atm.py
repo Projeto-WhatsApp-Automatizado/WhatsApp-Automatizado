@@ -58,7 +58,7 @@ def atualizar(id: int, atm: Atm):
 
             sql = """
                 UPDATE public.atendimento
-	            SET assunto=:atm_assunto, status=:atm_status, data_abertura=:atm_abertura, data_fechamento:atm_fechamento, usuario_id=:atm_usuario_id
+	            SET assunto=:atm_assunto, status=:atm_status, data_abertura=:atm_abertura, data_fechamento=:atm_fechamento, usuario_id=:atm_usuario_id
 	            WHERE id = :atm_id;
             """
 

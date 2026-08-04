@@ -9,6 +9,7 @@ from controlador_adm import router as adm_router
 from controlador_historico_chatbot import router as historio_chatbot_router
 from controlador_atm import router as atendimento_router
 from controlador_pagamento import router as pagamento_router
+from controlador_interesse import router as interesse_router
 
 app = FastAPI()
 
@@ -20,6 +21,7 @@ app.include_router(adm_router)
 app.include_router(historio_chatbot_router)
 app.include_router(atendimento_router)
 app.include_router(pagamento_router)
+app.include_router(interesse_router)
 
 if __name__ == '__main__':
     uvicorn.run(

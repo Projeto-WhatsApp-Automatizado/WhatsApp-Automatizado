@@ -50,7 +50,7 @@ def cadastrar(curso: Curso):
         engine.dispose()
 
 
-@router.put('{id}')
+@router.put('/{id}')
 def atualizar(id: int, curso: Curso):
 
     engine = create_engine(DATABASE_URL)

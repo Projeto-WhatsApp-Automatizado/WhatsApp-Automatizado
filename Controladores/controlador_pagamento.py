@@ -69,6 +69,7 @@ def atualizar(id: int, pagamento: Pagamento):
                 "pag_forma": pagamento.forma_pagamento,
                 "pag_status": pagamento.status,
                 "pag_data": pagamento.data_pagamento,
+                "pag_obs": pagamento.observacoes,
                 "pag_matricula_id": pagamento.matricula_id
             }
 
