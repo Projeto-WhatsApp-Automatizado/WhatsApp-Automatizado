@@ -3,7 +3,7 @@ from _historico_chatbot import HistoricoChatbot
 
 from sqlalchemy import create_engine, text
 
-router = APIRouter(prefix="/hiscoricos", tags=["Historicos"])
+router = APIRouter(prefix="/historicos", tags=["Historicos"])
 
 DATABASE_URL = "postgresql://postgres:123@localhost:5432/Zap?client_encoding=win1252"
 
