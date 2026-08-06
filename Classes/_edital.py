@@ -7,4 +7,4 @@ class Edital(BaseModel):
     data_prova: date
     banca: str = Field(min_length=3)
     data_cadastro: date
-    status: bool
+    ativo: bool

@@ -7,4 +7,4 @@ class Adm(BaseModel):
     senha: str = Field(min_length=8)
     nivel_acesso: str = Field(min_length=1)
     data_cadastro: date
-    status: bool
+    ativo: bool

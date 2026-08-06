@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from _pagamento import Pagamento
+from Classes._pagamento import Pagamento
 
 
 #pip install sqlalchemy
@@ -11,7 +11,7 @@ DATABASE_URL = "postgresql://postgres:123@localhost:5432/Zap?client_encoding=win
 #REST
 #Create
 @router.post('/cadastro')
-def cadastrar(pagamento: Pagamento):
+def cadastrar(pag: Pagamento):
 
     engine = create_engine(DATABASE_URL)
 
@@ -20,17 +20,17 @@ def cadastrar(pagamento: Pagamento):
 
             sql = """
                 INSERT INTO public.pagamento(
-	                valor, forma_pagamento, status, data_pagamento, observacoes, matricula_id)
-	            VALUES (:pag_valor, :pag_forma, :pag_status, :pag_data, :pag_obs, :pag_matricula_id);
+	                valor, forma_pagamento, data_pagamento, observacoes, matricula_id, ativo)
+	            VALUES (:pag_valor, :pag_forma, :pag_data, :pag_obs, :pag_matricula_id, :pag_ativo);
             """
 
             dados = {
-                "pag_valor": pagamento.valor,
-                "pag_forma": pagamento.forma_pagamento,
-                "pag_status": pagamento.status,
-                "pag_data": pagamento.data_pagamento,
-                "pag_obs": pagamento.observacoes,
-                "pag_matricula_id": pagamento.matricula_id
+                "pag_valor": pag.valor,
+                "pag_forma": pag.forma_pagamento,
+                "pag_data": pag.data_pagamento,
+                "pag_obs": pag.observacoes,
+                "pag_matricula_id": pag.matricula_id,
+                "pag_ativo": pag.ativo
             }
 
             con.execute(text(sql), dados)
@@ -50,7 +50,7 @@ def cadastrar(pagamento: Pagamento):
 
 
 @router.put('/{id}')
-def atualizar(id: int, pagamento: Pagamento):
+def atualizar(id: int, pag: Pagamento):
 
     engine = create_engine(DATABASE_URL)
 
@@ -59,18 +59,18 @@ def atualizar(id: int, pagamento: Pagamento):
 
             sql = """
                 UPDATE public.pagamento
-	            SET valor=:pag_valor, forma_pagamento=:pag_forma, status=:pag_status, data_pagamento=:pag_data, observacoes=:pag_obs, matricula_id=:pag_matricula_id
+	            SET valor=:pag_valor, forma_pagamento=:pag_forma, data_pagamento=:pag_data, observacoes=:pag_obs, matricula_id=:pag_matricula_id, ativo=:pag_ativo
 	            WHERE id = :pag_id;
             """
 
             dados = {
                 "pag_id": id,
-                "pag_valor": pagamento.valor,
-                "pag_forma": pagamento.forma_pagamento,
-                "pag_status": pagamento.status,
-                "pag_data": pagamento.data_pagamento,
-                "pag_obs": pagamento.observacoes,
-                "pag_matricula_id": pagamento.matricula_id
+                "pag_valor": pag.valor,
+                "pag_forma": pag.forma_pagamento,
+                "pag_data": pag.data_pagamento,
+                "pag_obs": pag.observacoes,
+                "pag_matricula_id": pag.matricula_id,
+                "pag_ativo": pag.ativo
             }
 
             resultado = con.execute(text(sql), dados)

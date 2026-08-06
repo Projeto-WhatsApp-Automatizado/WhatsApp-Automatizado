@@ -7,4 +7,4 @@ class Curso(BaseModel):
     carga_horaria: int
     valor: float = Field(gt=0)
     inicio_aulas: date
-    status: bool
+    ativo: bool

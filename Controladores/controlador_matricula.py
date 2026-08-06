@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from _matricula import Matricula
+from Classes._matricula import Matricula
 
 
 #pip install sqlalchemy
@@ -20,16 +20,16 @@ def cadastrar(matricula: Matricula):
 
             sql = """
                 INSERT INTO public.matricula(
-	                status, data_matricula, observacoes, usuario_id, curso_id)
-	            VALUES (:status, :data_matricula, :observacoes, :usuario_id, :curso_id);
+	                data_matricula, observacoes, usuario_id, curso_id, ativo)
+	            VALUES (:status, :data_matricula, :observacoes, :usuario_id, :curso_id, :ativo);
             """
 
             dados = {
-                "status": matricula.status,
                 "data_matricula": matricula.data_matricula,
                 "observacoes": matricula.observacoes,
                 "usuario_id": matricula.usuario_id,
-                "curso_id": matricula.curso_id
+                "curso_id": matricula.curso_id,
+                "ativo": matricula.ativo,
             }
 
             con.execute(text(sql), dados)
@@ -58,17 +58,17 @@ def atualizar(id: int, matricula: Matricula):
 
             sql = """
                 UPDATE public.matricula
-	            SET status=:status, data_matricula=:data_matricula, observacoes=:observacoes, usuario_id=:usuario_id, curso_id=:curso_id
+	            SET data_matricula=:data_matricula, observacoes=:observacoes, usuario_id=:usuario_id, curso_id=:curso_id, ativo=:ativo
 	            WHERE id = :matricula_id;
             """
 
             dados = {
                 "matricula_id": id,
-                "status": matricula.status,
                 "data_matricula": matricula.data_matricula,
                 "observacoes": matricula.observacoes,
                 "usuario_id": matricula.usuario_id,
-                "curso_id": matricula.curso_id
+                "curso_id": matricula.curso_id,
+                "ativo": matricula.ativo,
             }
 
             resultado = con.execute(text(sql), dados)

@@ -1,10 +1,10 @@
 from fastapi import APIRouter
-from _curso_edital import CursoEdital
+from Classes._curso_edital import CursoEdital
 
 
 #pip install sqlalchemy
 from sqlalchemy import create_engine, text
-router = APIRouter(prefix="/curso-edital", tags=["cursos-edital"])
+router = APIRouter(prefix="/cursos-editais", tags=["cursos editais"])
 
 #inserção no banco "postgresql://usuario:senha@servidor:porta/banco"
 DATABASE_URL = "postgresql://postgres:123@localhost:5432/Zap?client_encoding=win1252"
@@ -45,43 +45,43 @@ def cadastrar(curso_edital: CursoEdital):
         engine.dispose()
 
 
-@router.put('/')
-def atualizar( curso_edital: CursoEdital):
+# @router.put('/')
+# def atualizar( curso_edital: CursoEdital):
 
-    engine = create_engine(DATABASE_URL)
+#     engine = create_engine(DATABASE_URL)
 
-    try:
-        with engine.begin() as con:
+#     try:
+#         with engine.begin() as con:
 
-            sql = """
-                UPDATE public.curso_edital
-	            SET curso_id=:curso_id, edital_id=:edital_id
-	            WHERE curso_id = :curso_id AND edital_id = :edital_id;
-            """
+#             sql = """
+#                 UPDATE public.curso_edital
+# 	            SET curso_id=:curso_id, edital_id=:edital_id
+# 	            WHERE curso_id = :curso_id AND edital_id = :edital_id;
+#             """
 
-            dados = {
-                "curso_id": curso_edital.curso_id,
-                "edital_id": curso_edital.edital_id
-            }
+#             dados = {
+#                 "curso_id": curso_edital.curso_id,
+#                 "edital_id": curso_edital.edital_id
+#             }
 
-            resultado = con.execute(text(sql), dados)
+#             resultado = con.execute(text(sql), dados)
 
-            if resultado.rowcount == 0:
-                return {
-                    "CursoEdital não encontrado"
-                }
+#             if resultado.rowcount == 0:
+#                 return {
+#                     "CursoEdital não encontrado"
+#                 }
 
-            return {
-                "CursoEdital atualizado com sucesso"
-            }
+#             return {
+#                 "CursoEdital atualizado com sucesso"
+#             }
 
-    except Exception as e:
-        return {
-            "erro": str(e)
-        }
+#     except Exception as e:
+#         return {
+#             "erro": str(e)
+#         }
 
-    finally:
-        engine.dispose()
+#     finally:
+#         engine.dispose()
 
 @router.delete('/{curso_id}/{edital_id}')
 def deletar(curso_id: int, edital_id: int):
