@@ -4,7 +4,7 @@ from _edital import Edital
 
 #pip install sqlalchemy
 from sqlalchemy import create_engine, text
-router = APIRouter(prefix="/edital", tags=["Edital"])
+router = APIRouter(prefix="/editais", tags=["Editais"])
 
 #inserção no banco "postgresql://usuario:senha@servidor:porta/banco"
 DATABASE_URL = "postgresql://postgres:123@localhost:5432/Zap" #adicionar enderço do banco que iremos criar

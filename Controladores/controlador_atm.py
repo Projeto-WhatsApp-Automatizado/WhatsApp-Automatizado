@@ -1,17 +1,17 @@
 from fastapi import APIRouter
-from _matricula import Matricula
+from _atm import Atm
 
 
 #pip install sqlalchemy
 from sqlalchemy import create_engine, text
-router = APIRouter(prefix="/matriculas", tags=["matriculas"])
+router = APIRouter(prefix="/atms", tags=["atms"])
 
 #inserção no banco "postgresql://usuario:senha@servidor:porta/banco"
 DATABASE_URL = "postgresql://postgres:123@localhost:5432/Zap?client_encoding=win1252"
 #REST
 #Create
 @router.post('/cadastro')
-def cadastrar(matricula: Matricula):
+def cadastrar(atm: Atm):
 
     engine = create_engine(DATABASE_URL)
 
@@ -19,27 +19,27 @@ def cadastrar(matricula: Matricula):
         with engine.begin() as con:
 
             sql = """
-                INSERT INTO public.matricula(
-	                status, data_matricula, observacoes, usuario_id, curso_id)
-	            VALUES (:status, :data_matricula, :observacoes, :usuario_id, :curso_id);
+                INSERT INTO public.atendimento(
+	                assunto, status, data_abertura, data_fechamento, usuario_id)
+	            VALUES (:atm_assunto, :atm_status, :atm_abertura, :atm_fechamento, :atm_usuario_id);
             """
 
             dados = {
-                "status": matricula.status,
-                "data_matricula": matricula.data_matricula,
-                "observacoes": matricula.observacoes,
-                "usuario_id": matricula.usuario_id,
-                "curso_id": matricula.curso_id
+                "atm_assunto": atm.assunto,
+                "atm_status": atm.status,
+                "atm_abertura": atm.data_abertura,
+                "atm_fechamento": atm.data_fechamento,
+                "atm_usuario_id": atm.usuario_id
             }
 
             con.execute(text(sql), dados)
 
             return {
-                "mensagem": "Matrícula cadastrada com sucesso"
+                "mensagem": "Atendimento cadastrado com sucesso"
             }
 
     except Exception as e:
-        print(repr(e)) # Printa o erro cru no terminal do VS Code
+        print(repr(e))
         return {
             "erro": str(e)
         }
@@ -49,7 +49,7 @@ def cadastrar(matricula: Matricula):
 
 
 @router.put('/{id}')
-def atualizar(id: int, matricula: Matricula):
+def atualizar(id: int, atm: Atm):
 
     engine = create_engine(DATABASE_URL)
 
@@ -57,29 +57,29 @@ def atualizar(id: int, matricula: Matricula):
         with engine.begin() as con:
 
             sql = """
-                UPDATE public.matricula
-	            SET status=:status, data_matricula=:data_matricula, observacoes=:observacoes, usuario_id=:usuario_id, curso_id=:curso_id
-	            WHERE id = :matricula_id;
+                UPDATE public.atendimento
+	            SET assunto=:atm_assunto, status=:atm_status, data_abertura=:atm_abertura, data_fechamento=:atm_fechamento, usuario_id=:atm_usuario_id
+	            WHERE id = :atm_id;
             """
 
             dados = {
-                "matricula_id": id,
-                "status": matricula.status,
-                "data_matricula": matricula.data_matricula,
-                "observacoes": matricula.observacoes,
-                "usuario_id": matricula.usuario_id,
-                "curso_id": matricula.curso_id
+                "atm_id": id,
+                "atm_assunto": atm.assunto,
+                "atm_status": atm.status,
+                "atm_abertura": atm.data_abertura,
+                "atm_fechamento": atm.data_fechamento,
+                "atm_usuario_id": atm.usuario_id
             }
 
             resultado = con.execute(text(sql), dados)
 
             if resultado.rowcount == 0:
                 return {
-                    "Matrícula não encontrada"
+                    "Atendimento não encontrado"
                 }
 
             return {
-                "Matrícula atualizada com sucesso"
+                "Atendimento atualizado com sucesso"
             }
 
     except Exception as e:
@@ -99,23 +99,23 @@ def deletar(id: int):
         with engine.begin() as con:
 
             sql = """
-                DELETE FROM public.matricula
-	            WHERE id = :matricula_id;
+                DELETE FROM public.atendimento
+	            WHERE id = :atm_id;
             """
 
             dados = {
-                "matricula_id": id
+                "atm_id": id
             }
 
             resultado = con.execute(text(sql), dados)
 
             if resultado.rowcount == 0:
                 return {
-                    "Matrícula não encontrada"
+                    "Atendimento não encontrado"
                 }
 
             return {
-                "Matrícula excluída com sucesso"
+                "Atendimento excluído com sucesso"
             }
 
     except Exception as e:
