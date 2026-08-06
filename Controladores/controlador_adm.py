@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from _adm import Adm
+from Classes._adm import Adm
 
 
 #pip install sqlalchemy
@@ -20,8 +20,8 @@ def cadastrar(adm: Adm):
 
             sql = """
                 INSERT INTO public.administrador(
-	                nome, email, senha, nivel_acesso, data_cadastro, status)
-	            VALUES (:adm_nome, :adm_email, :adm_senha, :adm_acesso, :adm_cadastro, :adm_status);
+	                nome, email, senha, nivel_acesso, data_cadastro, ativo)
+	            VALUES (:adm_nome, :adm_email, :adm_senha, :adm_acesso, :adm_cadastro, :adm_ativo);
             """
 
             dados = {
@@ -30,7 +30,7 @@ def cadastrar(adm: Adm):
                 "adm_senha": adm.senha,
                 "adm_acesso": adm.nivel_acesso,
                 "adm_cadastro": adm.data_cadastro,
-                "adm_status": adm.status
+                "adm_ativo": adm.ativo
             }
 
             con.execute(text(sql), dados)
@@ -59,7 +59,7 @@ def atualizar(id: int, adm: Adm):
 
             sql = """
                 UPDATE public.administrador
-	            SET nome=:adm_nome, email=:adm_email, senha=:adm_senha, nivel_acesso=:adm_acesso, data_cadastro=:adm_cadastro, status=:adm_status
+	            SET nome=:adm_nome, email=:adm_email, senha=:adm_senha, nivel_acesso=:adm_acesso, data_cadastro=:adm_cadastro, ativo=:adm_ativo
 	            WHERE id = :adm_id;
             """
 
@@ -70,7 +70,7 @@ def atualizar(id: int, adm: Adm):
                 "adm_senha": adm.senha,
                 "adm_acesso": adm.nivel_acesso,
                 "adm_cadastro": adm.data_cadastro,
-                "adm_status": adm.status
+                "adm_ativo": adm.ativo
             }
 
             resultado = con.execute(text(sql), dados)

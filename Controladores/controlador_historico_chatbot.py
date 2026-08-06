@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from _historico_chatbot import HistoricoChatbot
+from Classes._historico_chatbot import HistoricoChatbot
 
 from sqlalchemy import create_engine, text
 

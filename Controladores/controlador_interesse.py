@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from _interesse import Interesse
+from Classes._interesse import Interesse
 
 
 #pip install sqlalchemy
