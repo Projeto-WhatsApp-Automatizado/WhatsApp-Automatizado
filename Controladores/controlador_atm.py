@@ -21,7 +21,7 @@ def cadastrar(atm: Atm):
             sql = """
                 INSERT INTO public.atendimento(
 	                assunto, data_abertura, data_fechamento, usuario_id, ativo)
-	            VALUES (:atm_assunto, :atm_status, :atm_abertura, :atm_fechamento, :atm_usuario_id, :atm_ativo);
+	            VALUES (:atm_assunto, :atm_abertura, :atm_fechamento, :atm_usuario_id, :atm_ativo);
             """
 
             dados = {
