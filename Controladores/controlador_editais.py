@@ -4,7 +4,7 @@ from Classes._edital import Edital
 
 #pip install sqlalchemy
 from sqlalchemy import create_engine, text
-router = APIRouter(prefix="/edital", tags=["Edital"])
+router = APIRouter(prefix="/editais", tags=["Editais"])
 
 #inserção no banco "postgresql://usuario:senha@servidor:porta/banco"
 DATABASE_URL = "postgresql://postgres:123@localhost:5432/Zap" #adicionar enderço do banco que iremos criar
@@ -20,17 +20,18 @@ def cadastrar(edital: Edital):
 
             sql = """
                 INSERT INTO public.edital(
-	            nome, descricao, data_prova, data_cadastro, status, banca)
-	            VALUES (:nome, :descricao, :data_prova, :data_cadastro, :status, :banca);
+	                nome, descricao, banca, data_cadastro, data_prova, ativo)
+	            VALUES (:nome, :descricao, :banca, :data_cadastro, :data_prova, :ativo);
             """
 
             dados = {
                 "nome": edital.nome,
                 "descricao": edital.descricao,
-                "data_prova": edital.data_prova,
+                "banca": edital.banca,
                 "data_cadastro": edital.data_cadastro,
-                "status": edital.status,
-                "banca": edital.banca
+                "data_prova": edital.data_prova,
+                "ativo": edital.ativo,
+                
             }
 
             con.execute(text(sql), dados)
@@ -59,23 +60,19 @@ def atualizar(id: int, edital: Edital):
 
             sql = """
                 UPDATE public.edital
-                SET nome = :nome,
-                    descricao = :descricao,
-                    data_prova = :data_prova,
-                    data_cadastro = :data_cadastro,
-                    status = :status,
-                    banca = :banca
-                WHERE id = :id
+	            SET nome=:nome, descricao=:descricao, banca=:banca, data_cadastro=:data_cadastro, data_prova=:data_prova, ativo=:ativo
+	            WHERE id = :id;
             """
 
             dados = {
                 "id": id,
                 "nome": edital.nome,
                 "descricao": edital.descricao,
-                "data_prova": edital.data_prova,
+                "banca": edital.banca,
                 "data_cadastro": edital.data_cadastro,
-                "status": edital.status,
-                "banca": edital.banca
+                "data_prova": edital.data_prova,
+                "ativo": edital.ativo,
+                
             }
 
             resultado = con.execute(text(sql), dados)

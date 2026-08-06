@@ -1,17 +1,17 @@
 from fastapi import APIRouter
-from Classes._adm import Adm
+from Classes._matricula import Matricula
 
 
 #pip install sqlalchemy
 from sqlalchemy import create_engine, text
-router = APIRouter(prefix="/adms", tags=["adms"])
+router = APIRouter(prefix="/matriculas", tags=["matriculas"])
 
 #inserção no banco "postgresql://usuario:senha@servidor:porta/banco"
 DATABASE_URL = "postgresql://postgres:123@localhost:5432/Zap?client_encoding=win1252"
 #REST
 #Create
 @router.post('/cadastro')
-def cadastrar(adm: Adm):
+def cadastrar(matricula: Matricula):
 
     engine = create_engine(DATABASE_URL)
 
@@ -19,28 +19,27 @@ def cadastrar(adm: Adm):
         with engine.begin() as con:
 
             sql = """
-                INSERT INTO public.administrador(
-	                nome, email, senha, nivel_acesso, data_cadastro, ativo)
-	            VALUES (:adm_nome, :adm_email, :adm_senha, :adm_acesso, :adm_cadastro, :adm_ativo);
+                INSERT INTO public.matricula(
+	                data_matricula, observacoes, usuario_id, curso_id, ativo)
+	            VALUES (:data_matricula, :observacoes, :usuario_id, :curso_id, :ativo);
             """
 
             dados = {
-                "adm_nome": adm.nome,
-                "adm_email": adm.email,
-                "adm_senha": adm.senha,
-                "adm_acesso": adm.nivel_acesso,
-                "adm_cadastro": adm.data_cadastro,
-                "adm_ativo": adm.ativo
+                "data_matricula": matricula.data_matricula,
+                "observacoes": matricula.observacoes,
+                "usuario_id": matricula.usuario_id,
+                "curso_id": matricula.curso_id,
+                "ativo": matricula.ativo,
             }
 
             con.execute(text(sql), dados)
 
             return {
-                "mensagem": "Administrador cadastrado com sucesso"
+                "mensagem": "Matrícula cadastrada com sucesso"
             }
 
     except Exception as e:
-        print(repr(e))
+        print(repr(e)) # Printa o erro cru no terminal do VS Code
         return {
             "erro": str(e)
         }
@@ -50,7 +49,7 @@ def cadastrar(adm: Adm):
 
 
 @router.put('/{id}')
-def atualizar(id: int, adm: Adm):
+def atualizar(id: int, matricula: Matricula):
 
     engine = create_engine(DATABASE_URL)
 
@@ -58,30 +57,29 @@ def atualizar(id: int, adm: Adm):
         with engine.begin() as con:
 
             sql = """
-                UPDATE public.administrador
-	            SET nome=:adm_nome, email=:adm_email, senha=:adm_senha, nivel_acesso=:adm_acesso, data_cadastro=:adm_cadastro, ativo=:adm_ativo
-	            WHERE id = :adm_id;
+                UPDATE public.matricula
+	            SET data_matricula=:data_matricula, observacoes=:observacoes, usuario_id=:usuario_id, curso_id=:curso_id, ativo=:ativo
+	            WHERE id = :matricula_id;
             """
 
             dados = {
-                "adm_id": id,
-                "adm_nome": adm.nome,
-                "adm_email": adm.email,
-                "adm_senha": adm.senha,
-                "adm_acesso": adm.nivel_acesso,
-                "adm_cadastro": adm.data_cadastro,
-                "adm_ativo": adm.ativo
+                "matricula_id": id,
+                "data_matricula": matricula.data_matricula,
+                "observacoes": matricula.observacoes,
+                "usuario_id": matricula.usuario_id,
+                "curso_id": matricula.curso_id,
+                "ativo": matricula.ativo,
             }
 
             resultado = con.execute(text(sql), dados)
 
             if resultado.rowcount == 0:
                 return {
-                    "Administrador não encontrado"
+                    "Matrícula não encontrada"
                 }
 
             return {
-                "Administrador atualizado com sucesso"
+                "Matrícula atualizada com sucesso"
             }
 
     except Exception as e:
@@ -101,23 +99,23 @@ def deletar(id: int):
         with engine.begin() as con:
 
             sql = """
-                DELETE FROM public.administrador
-	            WHERE id = :adm_id;
+                DELETE FROM public.matricula
+	            WHERE id = :matricula_id;
             """
 
             dados = {
-                "adm_id": id
+                "matricula_id": id
             }
 
             resultado = con.execute(text(sql), dados)
 
             if resultado.rowcount == 0:
                 return {
-                    "Administrador não encontrado"
+                    "Matrícula não encontrada"
                 }
 
             return {
-                "Administrador excluído com sucesso"
+                "Matrícula excluída com sucesso"
             }
 
     except Exception as e:

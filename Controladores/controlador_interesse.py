@@ -1,17 +1,17 @@
 from fastapi import APIRouter
-from Classes._adm import Adm
+from Classes._interesse import Interesse
 
 
 #pip install sqlalchemy
 from sqlalchemy import create_engine, text
-router = APIRouter(prefix="/adms", tags=["adms"])
+router = APIRouter(prefix="/interesses", tags=["interesses"])
 
 #inserção no banco "postgresql://usuario:senha@servidor:porta/banco"
 DATABASE_URL = "postgresql://postgres:123@localhost:5432/Zap?client_encoding=win1252"
 #REST
 #Create
 @router.post('/cadastro')
-def cadastrar(adm: Adm):
+def cadastrar(int: Interesse):
 
     engine = create_engine(DATABASE_URL)
 
@@ -19,24 +19,23 @@ def cadastrar(adm: Adm):
         with engine.begin() as con:
 
             sql = """
-                INSERT INTO public.administrador(
-	                nome, email, senha, nivel_acesso, data_cadastro, ativo)
-	            VALUES (:adm_nome, :adm_email, :adm_senha, :adm_acesso, :adm_cadastro, :adm_ativo);
+                INSERT INTO public.interesse(
+	                origem, data, usuario_id, curso_id, edital_id)
+	            VALUES (:int_origem, :int_data, :int_usuario_id, :int_curso_id, :int_edital_id);
             """
 
             dados = {
-                "adm_nome": adm.nome,
-                "adm_email": adm.email,
-                "adm_senha": adm.senha,
-                "adm_acesso": adm.nivel_acesso,
-                "adm_cadastro": adm.data_cadastro,
-                "adm_ativo": adm.ativo
+                "int_origem": int.origem,
+                "int_data": int.data,
+                "int_usuario_id": int.usuario_id,
+                "int_curso_id": int.curso_id,
+                "int_edital_id": int.edital_id
             }
 
             con.execute(text(sql), dados)
 
             return {
-                "mensagem": "Administrador cadastrado com sucesso"
+                "mensagem": "Interesse cadastrado com sucesso"
             }
 
     except Exception as e:
@@ -50,7 +49,7 @@ def cadastrar(adm: Adm):
 
 
 @router.put('/{id}')
-def atualizar(id: int, adm: Adm):
+def atualizar(id: int, int: Interesse):
 
     engine = create_engine(DATABASE_URL)
 
@@ -58,30 +57,29 @@ def atualizar(id: int, adm: Adm):
         with engine.begin() as con:
 
             sql = """
-                UPDATE public.administrador
-	            SET nome=:adm_nome, email=:adm_email, senha=:adm_senha, nivel_acesso=:adm_acesso, data_cadastro=:adm_cadastro, ativo=:adm_ativo
-	            WHERE id = :adm_id;
+                UPDATE public.interesse
+	            SET origem=:int_origem, data=:int_data, usuario_id=:int_usuario_id, curso_id=:int_curso_id, edital_id=:int_edital_id
+	            WHERE id = :int_id;
             """
 
             dados = {
-                "adm_id": id,
-                "adm_nome": adm.nome,
-                "adm_email": adm.email,
-                "adm_senha": adm.senha,
-                "adm_acesso": adm.nivel_acesso,
-                "adm_cadastro": adm.data_cadastro,
-                "adm_ativo": adm.ativo
+                "int_id": id,
+                "int_origem": int.origem,
+                "int_data": int.data,
+                "int_usuario_id": int.usuario_id,
+                "int_curso_id": int.curso_id,
+                "int_edital_id": int.edital_id
             }
 
             resultado = con.execute(text(sql), dados)
 
             if resultado.rowcount == 0:
                 return {
-                    "Administrador não encontrado"
+                    "Interesse não encontrado"
                 }
 
             return {
-                "Administrador atualizado com sucesso"
+                "Interesse atualizado com sucesso"
             }
 
     except Exception as e:
@@ -101,23 +99,23 @@ def deletar(id: int):
         with engine.begin() as con:
 
             sql = """
-                DELETE FROM public.administrador
-	            WHERE id = :adm_id;
+                DELETE FROM public.interesse
+	            WHERE id = :int_id;
             """
 
             dados = {
-                "adm_id": id
+                "int_id": id
             }
 
             resultado = con.execute(text(sql), dados)
 
             if resultado.rowcount == 0:
                 return {
-                    "Administrador não encontrado"
+                    "Interesse não encontrado"
                 }
 
             return {
-                "Administrador excluído com sucesso"
+                "Interesse excluído com sucesso"
             }
 
     except Exception as e:

@@ -21,8 +21,8 @@ def cadastrar(curso: Curso):
 
             sql = """
                 INSERT INTO public.curso(
-	            nome, descricao, carga_horaria, valor, inicio_aulas, status)
-	            VALUES (:nome, :descricao, :carga_horaria, :valor, :inicio_aulas, :status);
+	            nome, descricao, carga_horaria, valor, inicio_aulas, ativo)
+	            VALUES (:nome, :descricao, :carga_horaria, :valor, :inicio_aulas, :ativo);
             """
 
             dados = {
@@ -31,7 +31,7 @@ def cadastrar(curso: Curso):
                 "carga_horaria": curso.carga_horaria,
                 "valor": curso.valor,
                 "inicio_aulas": curso.inicio_aulas,
-                "status": curso.status
+                "ativo": curso.ativo
             }
 
             con.execute(text(sql), dados)
@@ -50,7 +50,7 @@ def cadastrar(curso: Curso):
         engine.dispose()
 
 
-@router.put('{id}')
+@router.put('/{id}')
 def atualizar(id: int, curso: Curso):
 
     engine = create_engine(DATABASE_URL)
@@ -60,7 +60,7 @@ def atualizar(id: int, curso: Curso):
 
             sql = """
                 UPDATE public.curso
-	            SET id=:id, nome=:nome, descricao=:descricao, carga_horaria=:carga_horaria, valor=:valor, inicio_aulas=:inicio_aulas, status=:status
+	            SET id=:id, nome=:nome, descricao=:descricao, carga_horaria=:carga_horaria, valor=:valor, inicio_aulas=:inicio_aulas, ativo=:ativo
 	            WHERE id = :id;
             """
 
@@ -71,7 +71,7 @@ def atualizar(id: int, curso: Curso):
                 "carga_horaria": curso.carga_horaria,
                 "valor": curso.valor,
                 "inicio_aulas": curso.inicio_aulas,
-                "status": curso.status
+                "ativo": curso.ativo
             }
 
             resultado = con.execute(text(sql), dados)

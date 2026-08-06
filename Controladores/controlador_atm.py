@@ -20,16 +20,16 @@ def cadastrar(atm: Atm):
 
             sql = """
                 INSERT INTO public.atendimento(
-	                assunto, status, data_abertura, data_fechamento, usuario_id)
-	            VALUES (:atm_assunto, :atm_status, :atm_abertura, :atm_fechamento, :atm_usuario_id);
+	                assunto, data_abertura, data_fechamento, usuario_id, ativo)
+	            VALUES (:atm_assunto, :atm_abertura, :atm_fechamento, :atm_usuario_id, :atm_ativo);
             """
 
             dados = {
                 "atm_assunto": atm.assunto,
-                "atm_status": atm.status,
                 "atm_abertura": atm.data_abertura,
                 "atm_fechamento": atm.data_fechamento,
-                "atm_usuario_id": atm.usuario_id
+                "atm_usuario_id": atm.usuario_id,
+                "atm_ativo": atm.ativo,
             }
 
             con.execute(text(sql), dados)
@@ -58,17 +58,17 @@ def atualizar(id: int, atm: Atm):
 
             sql = """
                 UPDATE public.atendimento
-	            SET assunto=:atm_assunto, status=:atm_status, data_abertura=:atm_abertura, data_fechamento:atm_fechamento, usuario_id=:atm_usuario_id
+	            SET assunto=:atm_assunto, data_abertura=:atm_abertura, data_fechamento=:atm_fechamento, usuario_id=:atm_usuario_id, ativo=:atm_ativo
 	            WHERE id = :atm_id;
             """
 
             dados = {
                 "atm_id": id,
                 "atm_assunto": atm.assunto,
-                "atm_status": atm.status,
                 "atm_abertura": atm.data_abertura,
                 "atm_fechamento": atm.data_fechamento,
-                "atm_usuario_id": atm.usuario_id
+                "atm_usuario_id": atm.usuario_id,
+                "atm_ativo": atm.ativo,
             }
 
             resultado = con.execute(text(sql), dados)
