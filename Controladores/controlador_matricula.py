@@ -21,7 +21,7 @@ def cadastrar(matricula: Matricula):
             sql = """
                 INSERT INTO public.matricula(
 	                data_matricula, observacoes, usuario_id, curso_id, ativo)
-	            VALUES (:status, :data_matricula, :observacoes, :usuario_id, :curso_id, :ativo);
+	            VALUES (:data_matricula, :observacoes, :usuario_id, :curso_id, :ativo);
             """
 
             dados = {
