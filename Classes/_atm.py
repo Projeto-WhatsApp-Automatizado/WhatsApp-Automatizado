@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field, field_validator
 
 class Atm(BaseModel):
     assunto: str = Field(
-        min_length=3,
+        min_length=1,
         max_length=100
     )
 
