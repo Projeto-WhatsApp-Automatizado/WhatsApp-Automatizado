@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from _edital import Edital
+from Classes._edital import Edital
 
 
 #pip install sqlalchemy

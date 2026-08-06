@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from _usuario import Usuario
+from Classes._usuario import Usuario
 
 
 #pip install sqlalchemy

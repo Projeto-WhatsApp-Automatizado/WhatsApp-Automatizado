@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from _pagamento import Pagamento
+from Classes._pagamento import Pagamento
 
 
 #pip install sqlalchemy

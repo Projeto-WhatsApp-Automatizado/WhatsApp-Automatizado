@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from _curso import Curso
+from Classes._curso import Curso
 
 
 #pip install sqlalchemy

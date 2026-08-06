@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from _adm import Adm
+from Classes._adm import Adm
 
 
 #pip install sqlalchemy
