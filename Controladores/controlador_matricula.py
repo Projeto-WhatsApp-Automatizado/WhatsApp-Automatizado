@@ -1,13 +1,16 @@
 from fastapi import APIRouter
 from Classes._matricula import Matricula
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 
 #pip install sqlalchemy
 from sqlalchemy import create_engine, text
 router = APIRouter(prefix="/matriculas", tags=["matriculas"])
 
 #inserção no banco "postgresql://usuario:senha@servidor:porta/banco"
-DATABASE_URL = "postgresql://postgres:123@localhost:5432/Zap?client_encoding=win1252"
+DATABASE_URL = os.getenv("DATABASE_URL")
 #REST
 #Create
 @router.post('/cadastro')

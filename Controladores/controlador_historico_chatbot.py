@@ -1,11 +1,14 @@
 from fastapi import APIRouter
 from Classes._historico_chatbot import HistoricoChatbot
-
 from sqlalchemy import create_engine, text
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 router = APIRouter(prefix="/historicos", tags=["Historicos"])
 
-DATABASE_URL = "postgresql://postgres:123@localhost:5432/Zap?client_encoding=win1252"
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 
 @router.post("/cadastro")

@@ -1,6 +1,9 @@
 from fastapi import APIRouter
 from Classes._curso import Curso
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 
 #pip install sqlalchemy
 from sqlalchemy import create_engine, text
@@ -8,7 +11,7 @@ router = APIRouter(prefix="/cursos", tags=["cursos"])
 
 #inserção no banco "postgresql://usuario:senha@servidor:porta/banco"
 # Altere esta linha no controlador_usuario.py:
-DATABASE_URL = "postgresql://postgres:123@localhost:5432/Zap"
+DATABASE_URL = os.getenv("DATABASE_URL")
 #REST
 #Create
 @router.post('/cadastro')
