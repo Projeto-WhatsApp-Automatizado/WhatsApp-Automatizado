@@ -16,6 +16,7 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 @router.post('/cadastro')
 def cadastrar(usuario: Usuario):
 
+    print('teste render')
     engine = create_engine(DATABASE_URL)
 
     try:
