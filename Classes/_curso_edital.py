@@ -1,5 +1,4 @@
-from datetime import date
-from pydantic import BaseModel, Field, EmailStr
+from pydantic import BaseModel, Field
 
 class CursoEdital(BaseModel):
     curso_id: int = Field(gt=0)
