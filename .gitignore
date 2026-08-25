@@ -1,0 +1,351 @@
+# =========================================================
+# PYTHON
+# =========================================================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Nuitka
+.nuitka/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+
+# Ruff
+.ruff_cache/
+
+# Pylint
+.pylint.d/
+
+# Pyright
+.pyright/
+
+# Coverage
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Tox
+.tox/
+
+# Nox
+.nox/
+
+# =========================================================
+# AMBIENTE VIRTUAL
+# =========================================================
+
+# Virtualenv
+venv/
+.venv/
+env/
+.env/
+ENV/
+env.bak/
+venv.bak/
+
+# =========================================================
+# VARIÁVEIS DE AMBIENTE / SEGREDOS
+# =========================================================
+
+# Arquivos contendo senhas, tokens, chaves etc.
+.env
+.env.*
+!.env.example
+!.env.example.*
+*.env
+
+# Chaves privadas
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+
+# Arquivos de credenciais
+credentials.json
+service-account.json
+secrets.json
+secrets.yaml
+secrets.yml
+
+# =========================================================
+# BANCO DE DADOS
+# =========================================================
+
+# Bancos locais SQLite
+*.db
+*.sqlite
+*.sqlite3
+*.db3
+
+# Arquivos de banco temporários
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Dumps de banco de dados
+# *.sql
+# *.sql.gz
+# *.dump
+# *.backup
+# *.bak
+
+# ATENÇÃO:
+# Se você tiver arquivos .sql que FAZEM PARTE DO PROJETO
+# (por exemplo, migrations ou schema), remova "*.sql"
+# desta seção e versione esses arquivos.
+
+# =========================================================
+# POSTGRESQL
+# =========================================================
+
+# Arquivos locais / temporários
+pgdata/
+postgres-data/
+postgresql-data/
+
+# =========================================================
+# MYSQL
+# =========================================================
+
+mysql-data/
+
+# =========================================================
+# REDIS
+# =========================================================
+
+redis-data/
+
+# =========================================================
+# LOGS
+# =========================================================
+
+*.log
+logs/
+log/
+*.log.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =========================================================
+# TEMPORÁRIOS
+# =========================================================
+
+*.tmp
+*.temp
+*.swp
+*.swo
+*.swn
+*.bak
+*.old
+*~
+.#*
+*.orig
+
+# =========================================================
+# IDEs / EDITORES
+# =========================================================
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# JetBrains / PyCharm / IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Spyder
+.spyderproject
+.spyproject
+
+# Jupyter
+.ipynb_checkpoints/
+
+# =========================================================
+# WINDOWS
+# =========================================================
+
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.stackdump
+
+# =========================================================
+# MACOS
+# =========================================================
+
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# =========================================================
+# LINUX
+# =========================================================
+
+*~
+.directory
+.Trash-*
+
+# =========================================================
+# DOCUMENTAÇÃO / ARQUIVOS GERADOS
+# =========================================================
+
+# *.pdf
+# *.doc
+# *.docx
+# *.xls
+# *.xlsx
+# *.ppt
+# *.pptx
+
+# =========================================================
+# IMAGENS / ARQUIVOS GRANDES GERADOS
+# =========================================================
+
+# Descomente se essas pastas forem apenas arquivos gerados:
+# uploads/
+# media/
+# generated/
+# output/
+# exports/
+
+# =========================================================
+# NODE / FRONTEND (caso o projeto Python tenha frontend)
+# =========================================================
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm/
+.yarn/
+.pnpm-store/
+
+# =========================================================
+# DOCKER
+# =========================================================
+
+# Dados persistentes de containers
+docker-data/
+docker-volumes/
+
+# =========================================================
+# TESTES
+# =========================================================
+
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+coverage.xml
+htmlcov/
+
+# =========================================================
+# DADOS / NOTEBOOKS
+# =========================================================
+
+*.csv
+*.tsv
+*.parquet
+*.feather
+
+# Se alguns desses arquivos forem necessários para o projeto,
+# remova-os do .gitignore.
+
+# =========================================================
+# ARQUIVOS DE CONFIGURAÇÃO LOCAIS
+# =========================================================
+
+config.local.py
+settings.local.py
+local_settings.py
+
+# =========================================================
+# CACHE GERAL
+# =========================================================
+
+.cache/
+.cache-loader/
+.parcel-cache/
+.temp/
+temp/
+tmp/
+
+# =========================================================
+# FERRAMENTAS DE DESENVOLVIMENTO
+# =========================================================
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.pytype/
+.hypothesis/
+.nox/
+.tox/
+
+# =========================================================
+# ARQUIVOS DE SISTEMA / EDITORES
+# =========================================================
+
+*.pid
+*.seed
+*.pid.lock
