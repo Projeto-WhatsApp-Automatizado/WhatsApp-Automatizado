@@ -2,7 +2,7 @@ from datetime import date
 
 from pydantic import BaseModel, EmailStr, Field, field_validator
 
-
+#classe de Administrador, com validações
 class Adm(BaseModel):
     nome: str = Field(
         min_length=3,
